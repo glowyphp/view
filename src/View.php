@@ -290,7 +290,7 @@ class View implements ArrayAccess
 
     /**
      * Get the string contents of the view.
-     * 
+     *
      * @return string Returns the string contents of the view.
      */
     public function __toString(): string

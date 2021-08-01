@@ -217,8 +217,8 @@ class View implements ArrayAccess
     /**
      * Assign a value to the specified offset.
      *
-     * @param string $offset The offset to assign the value to.
-     * @param mixed  $value  The value to set.
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value  The value to set.
      *
      * @return void Return void.
      */
@@ -246,7 +246,7 @@ class View implements ArrayAccess
      *
      * @return mixed Returns the value of the array.
      */
-    public function &__get(string $offset)
+    public function &__get($offset)
     {
         return $this->data[$offset];
     }
@@ -254,12 +254,12 @@ class View implements ArrayAccess
     /**
      * Assign a value to the specified offset.
      *
-     * @param string $offset The offset to assign the value to.
-     * @param mixed  $value  The value to set.
+     * @param mixed $offset The offset to assign the value to.
+     * @param mixed $value  The value to set.
      *
      * @return void Return void.
      */
-    public function __set(string $offset, $value): void
+    public function __set($offset, $value): void
     {
         $this->with($offset, $value);
     }
@@ -271,7 +271,7 @@ class View implements ArrayAccess
      *
      * @return bool Return TRUE key exists in the array, FALSE otherwise.
      */
-    public function __isset(string $offset): bool
+    public function __isset($offset): bool
     {
         return isset($this->data[$offset]);
     }
@@ -283,7 +283,7 @@ class View implements ArrayAccess
      *
      * @return void Return void.
      */
-    public function __unset(string $offset): void
+    public function __unset($offset): void
     {
         unset($this->data[$offset]);
     }

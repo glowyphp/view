@@ -1,2 +1,34 @@
-# view-
+<h1 align="center">View Component</h1>
+<p align="center">
 View Component provides basic methods for displaying PHP views.
+</p>
+
+<p align="center">
+<a href="https://github.com/atomastic/view/releases"><img alt="Version" src="https://img.shields.io/github/release/atomastic/view.svg?label=version&color=green"></a> <a href="https://github.com/atomastic/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=green" alt="License"></a> <a href="https://packagist.org/packages/atomastic/view"><img src="https://poser.pugx.org/atomastic/view/downloads" alt="Total downloads"></a> <img src="https://github.com/atomastic/view/workflows/Static%20Analysis/badge.svg?branch=dev"> <img src="https://github.com/atomastic/view/workflows/Tests/badge.svg">
+  <a href="https://app.codacy.com/gh/atomastic/view?utm_source=github.com&utm_medium=referral&utm_content=atomastic/view&utm_campaign=Badge_Grade_Dashboard"><img src="https://api.codacy.com/project/badge/Grade/72b4dc84c20145e1b77dc0004a3c8e3d"></a> <a href="https://codeclimate.com/github/atomastic/view/maintainability"><img src="https://api.codeclimate.com/v1/badges/b1e18970e78af3a48a0d/maintainability"/></a>
+</p>
+
+<br>
+
+### Installation
+
+#### With [Composer](https://getcomposer.org)
+
+```
+composer require atomastic/view
+```
+
+### Resources
+* [Documentation](https://atomastic.com/components/view)
+
+### Tests
+
+Run tests
+
+```
+./vendor/bin/pest
+```
+
+### License
+[The MIT License (MIT)](https://github.com/atomastic/view/blob/master/LICENSE)
+Copyright (c) 2021 [Sergey Romanenko](https://github.com/Awilum)

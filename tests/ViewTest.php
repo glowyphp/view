@@ -12,6 +12,12 @@ test('test view() helper', function (): void {
     $this->assertInstanceOf(View::class, view(__DIR__ . '/fixtures/foo'));
 });
 
+test('test e() helper', function (): void {
+    $this->assertEquals("&lt;a href='test'&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>"));
+    $this->assertEquals("&lt;a href=&#039;test&#039;&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>", ENT_QUOTES));
+});
+
+
 test('test with() method', function (): void {
     $view = view(__DIR__ . '/fixtures/foo');
 

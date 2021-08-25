@@ -5,7 +5,7 @@ View Component provides basic methods for displaying PHP views.
 
 <p align="center">
 <a href="https://github.com/atomastic/view/releases"><img alt="Version" src="https://img.shields.io/github/release/atomastic/view.svg?label=version&color=green"></a> <a href="https://github.com/atomastic/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=green" alt="License"></a> <a href="https://packagist.org/packages/atomastic/view"><img src="https://poser.pugx.org/atomastic/view/downloads" alt="Total downloads"></a> <img src="https://github.com/atomastic/view/workflows/Static%20Analysis/badge.svg?branch=dev"> <img src="https://github.com/atomastic/view/workflows/Tests/badge.svg">
-  <a href="https://app.codacy.com/gh/atomastic/view?utm_source=github.com&utm_medium=referral&utm_content=atomastic/view&utm_campaign=Badge_Grade_Dashboard"><img src="https://api.codacy.com/project/badge/Grade/72b4dc84c20145e1b77dc0004a3c8e3d"></a> <a href="https://codeclimate.com/github/atomastic/view/maintainability"><img src="https://api.codeclimate.com/v1/badges/b1e18970e78af3a48a0d/maintainability"/></a>
+  <a href="https://www.codacy.com/gh/atomastic/view/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=atomastic/view&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/0978d16c20eb4007b5f5c90b3d8aa2a4"/></a> <a href="https://codeclimate.com/github/atomastic/view/maintainability"><img src="https://api.codeclimate.com/v1/badges/b1e18970e78af3a48a0d/maintainability"/></a>
 </p>
 
 <br>

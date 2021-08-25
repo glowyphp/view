@@ -6,14 +6,14 @@ namespace Atomastic\View;
 
 use ArrayAccess;
 use Atomastic\Macroable\Macroable;
-use RuntimeException as ViewException;
 use BadMethodCallException;
+use RuntimeException as ViewException;
 
 use function array_key_exists;
 use function array_merge;
 use function call_user_func;
 use function extract;
-use function file_exists;
+use function filesystem;
 use function is_array;
 use function ob_get_clean;
 use function ob_start;
@@ -29,6 +29,7 @@ class View implements ArrayAccess
     use Macroable {
         __call as macroCall;
     }
+
     /**
      * The views directory.
      */
@@ -76,7 +77,7 @@ class View implements ArrayAccess
         $viewFile = self::$directory . '/' . $view . '.' . self::$extension;
 
         // Check if view file exists
-        if (! file_exists($viewFile)) {
+        if (! filesystem()->file($viewFile)->exists()) {
             throw new ViewException(vsprintf("%s(): The '%s' view does not exist.", [__METHOD__, $view]));
         }
 
@@ -190,8 +191,6 @@ class View implements ArrayAccess
      * Set views directory.
      *
      * @param string $directory Views directory.
-     * 
-     * @return void
      */
     public static function setDirectory(string $directory): void
     {
@@ -202,8 +201,6 @@ class View implements ArrayAccess
      * Set views extension.
      *
      * @param string $extension Views extension.
-     * 
-     * @return void
      */
     public static function setExtension(string $extension): void
     {

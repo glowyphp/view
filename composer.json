@@ -21,8 +21,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "atomastic/macroable": "^2.0",
-        "atomastic/arrays": "^2.0",
-        "atomastic/strings": "^3.0"
+        "atomastic/strings": "^3.0",
+        "atomastic/filesystem": "^2.1"
     },
     "autoload":{
         "psr-4": {

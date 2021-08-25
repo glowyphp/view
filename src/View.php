@@ -74,7 +74,7 @@ class View implements ArrayAccess
      */
     public function __construct(string $view, array $data = [])
     {
-        $viewFile = self::$directory . DIRECTORY_SEPARATOR . strings(self::normalizeName($view))->replace('.', DIRECTORY_SEPARATOR)->toString() . '.' . self::$extension;
+        $viewFile = self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension;
 
         // Check if view file exists
         if (! filesystem()->file($viewFile)->exists()) {
@@ -207,7 +207,22 @@ class View implements ArrayAccess
         self::$extension = $extension;
     }
 
-    public static function normalizeName(string $view)
+    /**
+     * Denormalize view name.
+     * 
+     * @param string $view View name.
+     */
+    public static function denormalizeName(string $view): string
+    {
+        return strings($view)->replace('.', '/')->toString();
+    }
+
+    /**
+     * Normalize view name.
+     * 
+     * @param string $view View name.
+     */
+    public static function normalizeName(string $view): string
     {
         return strings($view)->replace('/', '.')->toString();
     }

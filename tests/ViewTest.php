@@ -124,3 +124,11 @@ test('set extension', function (): void {
 
     $this->assertEquals('Foo', view('foo')->render());
 });
+
+test('normalize view name', function (): void {
+    $this->assertEquals('foo.bar.zed', View::normalizeName('foo/bar/zed'));
+});
+
+test('denormalize view name', function (): void {
+    $this->assertEquals('foo/bar/zed', View::denormalizeName('foo.bar.zed'));
+});

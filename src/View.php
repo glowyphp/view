@@ -76,6 +76,10 @@ class View implements ArrayAccess
     {
         $viewFile = self::$directory . '/' . $view . '.' . self::$extension;
 
+        if (filesystem()->isWindowsPath($viewFile)) {
+            $viewFile = strings($viewFile)->replace('\\', '/');
+        }
+
         // Check if view file exists
         if (! filesystem()->file($viewFile)->exists()) {
             throw new ViewException(vsprintf("%s(): The '%s' view does not exist.", [__METHOD__, $view]));

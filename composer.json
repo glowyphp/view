@@ -20,6 +20,8 @@
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "ext-spl": "*",
+        "ext-fileinfo": "*",
         "atomastic/macroable": "^2.0",
         "atomastic/strings": "^3.0",
         "atomastic/filesystem": "^2.1"

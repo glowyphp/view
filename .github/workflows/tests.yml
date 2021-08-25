@@ -20,7 +20,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         tools: composer:v2
-        extensions: json, mbstring
+        extensions: json, mbstring, fileinfo, spl
         coverage: xdebug
 
     - name: Setup Problem Matches

@@ -1,1 +1,1 @@
-<?= $this->foo ?>
+<?= e($this->foo) ?>

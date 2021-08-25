@@ -180,7 +180,7 @@ class View implements ArrayAccess
 
     /**
      * Dynamically bind parameters to the view.
-     * 
+     *
      * @param string $method     Method.
      * @param array  $parameters Parameters.
      */

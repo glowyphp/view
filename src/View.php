@@ -16,6 +16,7 @@ use function file_exists;
 use function is_array;
 use function ob_get_clean;
 use function ob_start;
+use function sprintf;
 use function strings;
 use function substr;
 use function vsprintf;
@@ -188,6 +189,14 @@ class View implements ArrayAccess
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
+        }
+
+        if (! strings($method)->startsWith('with')) {
+            throw new BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.',
+                static::class,
+                $method
+            ));
         }
 
         return $this->with(strings(substr($method, 4))->camel()->toString(), $parameters[0]);

@@ -65,6 +65,11 @@ test('view magic', function (): void {
     $this->assertTrue($view->offsetExists('foo'));
     $this->assertEquals('Foo', $view->render());
 
+
+    $view->offsetset('zed', 'Zed');
+    $this->assertTrue($view->offsetExists('zed'));
+    $this->assertEquals('Zed', $view->offsetGet('zed'));
+
     unset($view->bar);
     $this->assertFalse(isset($view->bar));
 });

@@ -101,7 +101,9 @@ test('macro', function (): void {
         return $arg1 + $arg2;
     });
 
-    $view = view(__DIR__ . '/fixtures/foo');
+    $view = view(__DIR__ . '/fixtures/macro');
     $this->assertEquals(2, $view->customMethod());
     $this->assertEquals(4, $view->customMethod(2, 2));
+
+    $this->assertEquals('Foo Bar', (string) $view->withFoo('Foo')->withBar('Bar'));
 });

@@ -57,17 +57,22 @@ test('view magic', function (): void {
     $this->assertFalse(isset($view->foo));
 
     $view->foo = 'Foo';
+    $view->bar = 'Bar';
     $this->assertEquals('Foo', $view->foo);
     $this->assertEquals($view['foo'], $view->foo);
     $this->assertTrue(isset($view->foo));
     $this->assertTrue(isset($view['foo']));
     $this->assertTrue($view->offsetExists('foo'));
     $this->assertEquals('Foo', $view->render());
+
+    unset($view->bar);
+    $this->assertFalse(isset($view->bar));
 });
 
 test('render', function (): void {
     $view = view(__DIR__ . '/fixtures/foo');
 
+    $this->assertEquals('Foo', (string) $view);
     $this->assertEquals('Foo', $view->render());
 });
 

@@ -180,10 +180,11 @@ class View implements ArrayAccess
 
     /**
      * Dynamically bind parameters to the view.
-     *
-     * @param  array $parameters
+     * 
+     * @param string $method     Method.
+     * @param array  $parameters Parameters.
      */
-    public function __call(string $method, array $parameters): View
+    public function __call(string $method, array $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);

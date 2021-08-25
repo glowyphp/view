@@ -7,6 +7,7 @@ namespace Atomastic\View;
 use ArrayAccess;
 use Atomastic\Macroable\Macroable;
 use RuntimeException as ViewException;
+use BadMethodCallException;
 
 use function array_key_exists;
 use function array_merge;

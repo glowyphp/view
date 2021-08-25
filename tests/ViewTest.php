@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Atomastic\View\View;
 use RuntimeException as ViewException;
 
-test('__construct method', function (): void {
+test('construct', function (): void {
     $this->assertInstanceOf(View::class, new View(__DIR__ . '/fixtures/foo'));
 });
 
@@ -13,25 +13,29 @@ test('throw exception ViewException', function (): void {
     $view =  new View(__DIR__ . '/fixtures/bar');
 })->throws(ViewException::class);
 
-test('view helper', function (): void {
+test('view', function (): void {
     $this->assertInstanceOf(View::class, view(__DIR__ . '/fixtures/foo'));
 });
 
-test('e helper', function (): void {
+test('e', function (): void {
     $this->assertEquals("&lt;a href='test'&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>"));
     $this->assertEquals("&lt;a href=&#039;test&#039;&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>", ENT_QUOTES));
 });
 
-test('with method', function (): void {
+test('with', function (): void {
     $view = view(__DIR__ . '/fixtures/foo');
 
     $view->with('foo', 'Foo');
     $view->with('bar', 'Bar');
 
     $this->assertEquals(['foo' => 'Foo', 'bar' => 'Bar'], $view->getData());
+
+    $view->with(['qwe' => 'QWE']);
+
+    $this->assertEquals(['foo' => 'Foo', 'bar' => 'Bar', 'qwe' => 'QWE'], $view->getData());
 });
 
-test('share method', function (): void {
+test('share', function (): void {
     $view = view(__DIR__ . '/fixtures/share');
 
     View::share('share', 'Foo');
@@ -39,7 +43,16 @@ test('share method', function (): void {
     $this->assertEquals('Foo', $view->render());
 });
 
-test('view magic methods', function (): void {
+test('getShared', function (): void {
+    $view = view(__DIR__ . '/fixtures/share');
+
+    View::share('share', 'Foo');
+
+    $this->assertEquals(['share' => 'Foo'], View::getShared());
+});
+
+
+test('view magic', function (): void {
     $view = view(__DIR__ . '/fixtures/magic');
 
     $this->assertFalse(isset($view->foo));
@@ -51,4 +64,23 @@ test('view magic methods', function (): void {
     $this->assertTrue(isset($view['foo']));
     $this->assertTrue($view->offsetExists('foo'));
     $this->assertEquals('Foo', $view->render());
+});
+
+test('render', function (): void {
+    $view = view(__DIR__ . '/fixtures/foo');
+
+    $this->assertEquals('Foo', $view->render());
+});
+
+test('render with callback', function (): void {
+    $view = view(__DIR__ . '/fixtures/foo');
+
+    $this->assertEquals('1. Foo', $view->render(function ($value) { return '1. ' . $value; }));
+});
+
+test('dislay', function (): void {
+    $view = view(__DIR__ . '/fixtures/foo');
+
+    $this->expectOutputString('Foo');
+    $view->display();
 });

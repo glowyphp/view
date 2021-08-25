@@ -51,7 +51,6 @@ test('getShared', function (): void {
     $this->assertEquals(['share' => 'Foo'], View::getShared());
 });
 
-
 test('view magic', function (): void {
     $view = view(__DIR__ . '/fixtures/magic');
 
@@ -83,4 +82,14 @@ test('dislay', function (): void {
 
     $this->expectOutputString('Foo');
     $view->display();
+});
+
+test('macro', function (): void {
+    View::macro('customMethod', function($arg1 = 1, $arg2 = 1) {
+        return $arg1 + $arg2;
+    });
+
+    $view = view(__DIR__ . '/fixtures/foo');
+    $this->assertEquals(2, $view->customMethod());
+    $this->assertEquals(4, $view->customMethod(2, 2));
 });

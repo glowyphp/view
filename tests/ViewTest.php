@@ -107,3 +107,15 @@ test('macro', function (): void {
 
     $this->assertEquals('Foo Bar', (string) $view->withFoo('Foo')->withBar('Bar'));
 });
+
+test('set directory', function (): void {
+    View::setDirectory(__DIR__ . '/fixtures/');
+
+    $this->assertEquals('Foo', view('foo')->render());
+});
+
+test('set extension', function (): void {
+    View::setExtension('php');
+
+    $this->assertEquals('Foo', view('foo')->render());
+});

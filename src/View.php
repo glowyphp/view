@@ -28,6 +28,10 @@ class View implements ArrayAccess
     use Macroable {
         __call as macroCall;
     }
+    /**
+     * The views directory.
+     */
+    protected static string $directory = '';
 
     /**
      * The name of the view.
@@ -68,13 +72,15 @@ class View implements ArrayAccess
      */
     public function __construct(string $view, array $data = [])
     {
+        $viewFile = strings(self::$directory . '/' . $view . '.' . self::$extension)->reduceSlashes()->toString();
+
         // Check if view file exists
-        if (! file_exists($view . '.' . self::$extension)) {
+        if (! file_exists($viewFile)) {
             throw new ViewException(vsprintf("%s(): The '%s' view does not exist.", [__METHOD__, $view]));
         }
 
         // Set view file
-        $this->view = $view . '.' . self::$extension;
+        $this->view = $viewFile;
 
         // Set view data
         $this->data = $data;
@@ -177,6 +183,30 @@ class View implements ArrayAccess
     public function getData(): array
     {
         return $this->data;
+    }
+
+    /**
+     * Set views directory.
+     *
+     * @param string $directory Views directory.
+     * 
+     * @return void
+     */
+    public static function setDirectory(string $directory): void
+    {
+        self::$directory = $directory;
+    }
+
+    /**
+     * Set views extension.
+     *
+     * @param string $extension Views extension.
+     * 
+     * @return void
+     */
+    public static function setExtension(string $extension): void
+    {
+        self::$extension = $extension;
     }
 
     /**

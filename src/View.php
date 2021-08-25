@@ -73,7 +73,7 @@ class View implements ArrayAccess
      */
     public function __construct(string $view, array $data = [])
     {
-        $viewFile = strings(self::$directory . '/' . $view . '.' . self::$extension)->reduceSlashes()->toString();
+        $viewFile = self::$directory . '/' . $view . '.' . self::$extension;
 
         // Check if view file exists
         if (! file_exists($viewFile)) {

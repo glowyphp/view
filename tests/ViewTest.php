@@ -10,8 +10,13 @@ test('construct', function (): void {
 });
 
 test('throw exception ViewException', function (): void {
-    $view =  new View(__DIR__ . '/fixtures/bar');
+    $view = new View(__DIR__ . '/fixtures/bar');
 })->throws(ViewException::class);
+
+test('throw exception BadMethodCallException', function (): void {
+    $view = new View(__DIR__ . '/fixtures/foo');
+    $view->foo();
+})->throws(BadMethodCallException::class);
 
 test('view', function (): void {
     $this->assertInstanceOf(View::class, view(__DIR__ . '/fixtures/foo'));

@@ -3,22 +3,26 @@
 declare(strict_types=1);
 
 use Atomastic\View\View;
+use RuntimeException as ViewException;
 
-test('test __construct() method', function (): void {
+test('__construct method', function (): void {
     $this->assertInstanceOf(View::class, new View(__DIR__ . '/fixtures/foo'));
 });
 
-test('test view() helper', function (): void {
+test('throw exception ViewException', function (): void {
+    $view =  new View(__DIR__ . '/fixtures/bar');
+})->throws(ViewException::class);
+
+test('view helper', function (): void {
     $this->assertInstanceOf(View::class, view(__DIR__ . '/fixtures/foo'));
 });
 
-test('test e() helper', function (): void {
+test('e helper', function (): void {
     $this->assertEquals("&lt;a href='test'&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>"));
     $this->assertEquals("&lt;a href=&#039;test&#039;&gt;Test&lt;/a&gt;", e("<a href='test'>Test</a>", ENT_QUOTES));
 });
 
-
-test('test with() method', function (): void {
+test('with method', function (): void {
     $view = view(__DIR__ . '/fixtures/foo');
 
     $view->with('foo', 'Foo');
@@ -27,7 +31,7 @@ test('test with() method', function (): void {
     $this->assertEquals(['foo' => 'Foo', 'bar' => 'Bar'], $view->getData());
 });
 
-test('test share() method', function (): void {
+test('share method', function (): void {
     $view = view(__DIR__ . '/fixtures/share');
 
     View::share('share', 'Foo');
@@ -35,7 +39,7 @@ test('test share() method', function (): void {
     $this->assertEquals('Foo', $view->render());
 });
 
-test('test view magic methods', function (): void {
+test('view magic methods', function (): void {
     $view = view(__DIR__ . '/fixtures/magic');
 
     $this->assertFalse(isset($view->foo));

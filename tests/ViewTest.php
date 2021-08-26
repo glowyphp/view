@@ -153,3 +153,10 @@ test('sections with extends', function (): void {
     $string = '<divclass="foo">Foocontent...</div><divclass="bar">Barcontent...</div><divclass="zed">Zedcontent...</div>';
     $this->assertEquals($string, trim(preg_replace('/\s/', '', $view->render())));
 });
+
+test('sections prepend and append', function (): void {
+    $view = view('sections/mode');
+
+    $string = "prependcontent...prependcontent...Foocontent...appendcontent...appendcontent...";
+    $this->assertEquals($string, trim(preg_replace('/\s/', '', $view->render())));
+});

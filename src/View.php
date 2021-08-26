@@ -372,6 +372,26 @@ class View implements ArrayAccess
     }
 
     /**
+     * Start new prepend section.
+     *
+     * @param string $name The name of the section.
+     */
+    public function prependSection(string $name): void
+    {
+        $this->section($name, self::SECTION_MODE_PREPEND);
+    }
+
+    /**
+     * Start new append section.
+     *
+     * @param string $name The name of the section.
+     */
+    public function appendSection(string $name): void
+    {
+        $this->section($name, self::SECTION_MODE_APPEND);
+    }
+
+    /**
      * Start a new section block.
      *
      * @param string $name The name of the section.

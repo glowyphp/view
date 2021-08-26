@@ -1,6 +1,6 @@
 <h1 align="center">View Component</h1>
 <p align="center">
-View Component provides basic methods for displaying PHP views.
+View Component provides basic methods for creating extendable PHP Views.
 </p>
 
 <p align="center">

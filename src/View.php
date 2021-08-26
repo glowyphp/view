@@ -382,7 +382,7 @@ class View implements ArrayAccess
     public function endSection(): void
     {
         if (is_null($this->sectionName)) {
-            throw new LogicException(
+            throw new ViewLogicException(
                 'You must start a section before you can stop it.'
             );
         }

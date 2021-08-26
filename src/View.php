@@ -8,6 +8,7 @@ use ArrayAccess;
 use Atomastic\Macroable\Macroable;
 use BadMethodCallException;
 use RuntimeException as ViewException;
+use LogicException as ViewLogicException;
 
 use function array_key_exists;
 use function array_merge;
@@ -366,7 +367,7 @@ class View implements ArrayAccess
     public function section(string $name, int $mode = self::SECTION_MODE_REWRITE): void
     {
         if ($this->sectionName) {
-            throw new LogicException('You cannot nest sections within other sections.');
+            throw new ViewLogicException('You cannot nest sections within other sections.');
         }
 
         $this->sectionName = $name;

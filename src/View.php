@@ -145,7 +145,7 @@ class View implements ArrayAccess
     }
 
     /**
-     * Get shared data with.
+     * Get shared data.
      *
      * @param  array|string $key   Data key
      * @param  mixed|null   $value Data value
@@ -258,12 +258,21 @@ class View implements ArrayAccess
      * Determining If A View Exists
      *
      * @param string $view View name.
+     * 
+     * @return bool Returns true or false view doesnt exists.
      */
     public static function exists(string $view): bool
     {
         return filesystem()->file(self::getFilePath($view))->exists();
     }
 
+    /**
+     * Get view file path.
+     * 
+     * @param string $view View name.
+     * 
+     * @return string Retruns view file path.
+     */
     public static function getFilePath(string $view): string
     {
         return self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension;
@@ -309,6 +318,8 @@ class View implements ArrayAccess
      * @param string $name     View name.
      * @param array  $data     View data.
      * @param string $callback Callback function used to filter output.
+     * 
+     * @return void Return void.
      */
     public function include(string $view, array $data = [], ?callable $callback = null): void
     {
@@ -320,6 +331,8 @@ class View implements ArrayAccess
      *
      * @param string $name View name to extend.
      * @param array  $data View data.
+     * 
+     * @return void Return void.
      */
     public function extends(string $name, array $data = []): void
     {

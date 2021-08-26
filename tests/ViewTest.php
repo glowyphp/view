@@ -132,3 +132,24 @@ test('normalize view name', function (): void {
 test('denormalize view name', function (): void {
     $this->assertEquals('foo/bar/zed', View::denormalizeName('foo.bar.zed'));
 });
+
+test('sections', function (): void {
+    $view = view('sections/foo');
+
+    $this->expectOutputString("Foo content...\n");
+    $view->display();
+});
+
+test('sections with override', function (): void {
+    $view = view('sections/bar');
+
+    $this->expectOutputString("Bar content...\n");
+    $view->display();
+});
+
+test('sections with extends', function (): void {
+    $view = view('sections/layouts/bar');
+
+    $string = '<divclass="foo">Foocontent...</div><divclass="bar">Barcontent...</div><divclass="zed">Zedcontent...</div>';
+    $this->assertEquals($string, trim(preg_replace('/\s/', '', $view->render())));
+});

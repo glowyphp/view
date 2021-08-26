@@ -15,11 +15,13 @@ use function call_user_func;
 use function extract;
 use function filesystem;
 use function is_array;
+use function is_null;
 use function ob_get_clean;
 use function ob_start;
 use function sprintf;
 use function strings;
 use function substr;
+use function view;
 use function vsprintf;
 
 use const EXTR_REFS;
@@ -31,33 +33,44 @@ class View implements ArrayAccess
     }
 
     /**
+     * Section mode
+     */
+    public const SECTION_MODE_REWRITE = 1;
+    public const SECTION_MODE_PREPEND = 2;
+    public const SECTION_MODE_APPEND  = 3;
+
+    /**
      * The views directory.
+     *
+     * @var string View directory.
      */
     protected static string $directory = '';
 
     /**
      * The name of the view.
+     *
+     * @var string View name.
      */
     protected string $view;
 
     /**
      * The array of view data.
      *
-     * @var array
+     * @var array View data.
      */
     protected array $data;
 
     /**
      * The content of view.
      *
-     * @var array
+     * @var string View content.
      */
     protected string $content;
 
     /**
      * Data that should be available to all views.
      *
-     * @var array
+     * @var array Shared data with all views.
      */
     protected static array $shared = [];
 
@@ -67,6 +80,28 @@ class View implements ArrayAccess
     protected static string $extension = 'php';
 
     /**
+     * Set section content mode:
+     * rewrite, append, prepend
+     *
+     * @var int Section mode.
+     */
+    protected int $sectionMode = self::SECTION_MODE_REWRITE;
+
+    /**
+     * The name of the parent view.
+     *
+     * @var string Parent view name.
+     */
+    protected string $parentViewName;
+
+    /**
+     * The data assigned to the parent view.
+     *
+     * @var array Parent view data.
+     */
+    protected array $parentViewData;
+
+    /**
      * Create a new view instance.
      *
      * @param string $view Name of the view file
@@ -74,15 +109,15 @@ class View implements ArrayAccess
      */
     public function __construct(string $view, array $data = [])
     {
-        $viewFile = self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension;
+        $viewFilePath = self::getFilePath($view);
 
         // Check if view file exists
-        if (! filesystem()->file($viewFile)->exists()) {
+        if (! filesystem()->file($viewFilePath)->exists()) {
             throw new ViewException(vsprintf("%s(): The '%s' view does not exist.", [__METHOD__, $view]));
         }
 
         // Set view file
-        $this->view = $viewFile;
+        $this->view = $viewFilePath;
 
         // Set view data
         $this->data = $data;
@@ -141,11 +176,13 @@ class View implements ArrayAccess
     /**
      * Include the view file and extracts the view variables before returning the generated output.
      *
-     * @param  string $callback Callback function used to filter output.
+     * @param string $callback Callback function used to filter output.
+     *
+     * @return string View content.
      */
     public function render(?callable $callback = null): string
     {
-        // Is output empty ?
+        // Is content empty
         if (empty($this->content)) {
             // Extract variables as references
             extract(array_merge($this->data, self::$shared), EXTR_REFS);
@@ -156,31 +193,40 @@ class View implements ArrayAccess
             // Include view file
             include $this->view;
 
-            // Output...
+            // Write content.
             $this->content = ob_get_clean();
+
+            // Extend parent view
+            if (isset($this->parentViewName)) {
+                $parent           = view($this->parentViewName, $this->parentViewData);
+                $parent->sections = $this->sections;
+                $this->content    = $parent->render();
+            }
         }
 
-        // Filter output ?
+        // Filter content
         if ($callback !== null) {
             $this->content = call_user_func($callback, $this->content);
         }
 
-        // Return output
+        // Return content
         return $this->content;
     }
 
     /**
      * Displays the rendered view.
+     *
+     * @param string $callback Callback function used to filter output.
      */
-    public function display(): void
+    public function display(?callable $callback = null): void
     {
-        echo $this->render();
+        echo $this->render($callback);
     }
 
     /**
      * Get the array of view data.
      *
-     * @return array
+     * @return array View data.
      */
     public function getData(): array
     {
@@ -208,8 +254,23 @@ class View implements ArrayAccess
     }
 
     /**
+     * Determining If A View Exists
+     *
+     * @param string $view View name.
+     */
+    public static function exists(string $view): bool
+    {
+        return filesystem()->file(self::getFilePath($view))->exists();
+    }
+
+    public static function getFilePath(string $view): string
+    {
+        return self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension;
+    }
+
+    /**
      * Denormalize view name.
-     * 
+     *
      * @param string $view View name.
      */
     public static function denormalizeName(string $view): string
@@ -219,12 +280,133 @@ class View implements ArrayAccess
 
     /**
      * Normalize view name.
-     * 
+     *
      * @param string $view View name.
      */
     public static function normalizeName(string $view): string
     {
         return strings($view)->replace('/', '.')->toString();
+    }
+
+    /**
+     * Fetch view.
+     *
+     * @param string $name     View name.
+     * @param array  $data     View data.
+     * @param string $callback Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function fetch(string $view, array $data = [], ?callable $callback = null): string
+    {
+        return view($view, $data)->render($callback);
+    }
+
+    /**
+     * Include view and display.
+     *
+     * @param string $name     View name.
+     * @param array  $data     View data.
+     * @param string $callback Callback function used to filter output.
+     */
+    public function include(string $view, array $data = [], ?callable $callback = null): void
+    {
+        view($view, $data)->display($callback);
+    }
+
+    /**
+     * Extend parent view.
+     *
+     * @param string $name View name to extend.
+     * @param array  $data View data.
+     */
+    public function extends(string $name, array $data = []): void
+    {
+        $this->parentViewName = $name;
+        $this->parentViewData = $data;
+    }
+
+    /**
+     * Determine if section exists.
+     *
+     * @param string $name Section name.
+     *
+     * @return bool Returns true or false section doesnt exists.
+     */
+    public function hasSection(string $name): bool
+    {
+        if (isset($this->sections[$name])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get section.
+     *
+     * @param string $name    Section name.
+     * @param mixed  $default Default data to display.
+     */
+    public function getSection(string $name, $default = null)
+    {
+        if (! isset($this->sections[$name])) {
+            return $default;
+        }
+
+        return $this->sections[$name];
+    }
+
+    /**
+     * Start a new section block.
+     *
+     * @param string $name The name of the section.
+     * @param string $mode The mode of the section.
+     */
+    public function section(string $name, int $mode = self::SECTION_MODE_REWRITE): void
+    {
+        if ($this->sectionName) {
+            throw new LogicException('You cannot nest sections within other sections.');
+        }
+
+        $this->sectionName = $name;
+        $this->sectionMode = $mode;
+
+        ob_start();
+    }
+
+    /**
+     * Stop the current section block.
+     */
+    public function endSection(): void
+    {
+        if (is_null($this->sectionName)) {
+            throw new LogicException(
+                'You must start a section before you can stop it.'
+            );
+        }
+
+        if (! isset($this->sections[$this->sectionName])) {
+            $this->sections[$this->sectionName] = '';
+        }
+
+        switch ($this->sectionMode) {
+            case self::SECTION_MODE_APPEND:
+                $this->sections[$this->sectionName] .= ob_get_clean();
+                break;
+
+            case self::SECTION_MODE_PREPEND:
+                $this->sections[$this->sectionName] = ob_get_clean() . $this->sections[$this->sectionName];
+                break;
+
+            default:
+            case self::SECTION_MODE_REWRITE:
+                $this->sections[$this->sectionName] = ob_get_clean();
+                break;
+        }
+
+        $this->sectionName = null;
+        $this->sectionMode = self::SECTION_MODE_REWRITE;
     }
 
     /**

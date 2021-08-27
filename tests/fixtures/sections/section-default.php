@@ -1,0 +1,1 @@
+<?= $this->getSection('default', 'Default') ?>

@@ -1,4 +1,4 @@
 <?php $this->section('foo') ?>
 Foo content...
-<?php $this->endSection('foo') ?>
+<?php $this->endSection() ?>
 <?= $this->getSection('foo') ?>

@@ -141,6 +141,27 @@ test('sections', function (): void {
     $view->display();
 });
 
+test('sections with default', function (): void {
+    $view = view('sections/section-default');
+
+    $this->expectOutputString("Default");
+    $view->display();
+});
+
+test('sections has', function (): void {
+    $view = view('sections/section-has');
+
+    $this->expectOutputString("");
+    $view->display();
+});
+
+test('fetch', function (): void {
+    $view = view('fetch');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
 test('sections with override', function (): void {
     $view = view('sections/bar');
 

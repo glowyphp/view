@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Atomastic\View\View;
 use RuntimeException as ViewException;
+use LogicException as ViewLogicException;
 
 test('construct', function (): void {
     $this->assertInstanceOf(View::class, new View(__DIR__ . '/fixtures/foo'));
@@ -160,3 +161,7 @@ test('sections prepend and append', function (): void {
     $string = "prependcontent...prependcontent...Foocontent...appendcontent...appendcontent...";
     $this->assertEquals($string, trim(preg_replace('/\s/', '', $view->render())));
 });
+
+test('sections throw LogicException for endSection method', function (): void {
+    $view = view('sections/foo')->endSection();
+})->throws(ViewLogicException::class);

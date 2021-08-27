@@ -162,6 +162,13 @@ test('fetch', function (): void {
     $view->display();
 });
 
+test('inlcude', function (): void {
+    $view = view('include');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
 test('sections with override', function (): void {
     $view = view('sections/bar');
 

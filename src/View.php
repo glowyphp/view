@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Atomastic\View;
+namespace Glowy\View;
 
 use ArrayAccess;
-use Atomastic\Macroable\Macroable;
+use Glowy\Macroable\Macroable;
 use BadMethodCallException;
 use RuntimeException as ViewException;
 use LogicException as ViewLogicException;

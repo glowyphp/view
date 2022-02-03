@@ -1,4 +1,4 @@
-<?php use Atomastic\View\View ?>
+<?php use Glowy\View\View ?>
 <?php $this->section('foo') ?>
 Foo content...
 <?php $this->endSection() ?>

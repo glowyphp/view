@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Glwy\View\View;
+use Glowy\View\View;
 use RuntimeException as ViewException;
 use LogicException as ViewLogicException;
 

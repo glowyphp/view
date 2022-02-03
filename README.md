@@ -1,4 +1,4 @@
-<h1 align="center">View Component</h1>
+<h1 align="center">View</h1>
 <p align="center">
 View Component provides basic methods for creating extendable PHP Views.
 </p>

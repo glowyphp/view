@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Atomastic\View\View;
+use Glowy\View\View;
 
 if (! function_exists('view')) {
     /**

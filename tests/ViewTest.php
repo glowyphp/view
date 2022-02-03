@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Atomastic\View\View;
+use Glwy\View\View;
 use RuntimeException as ViewException;
 use LogicException as ViewLogicException;
 

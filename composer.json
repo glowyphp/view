@@ -1,13 +1,13 @@
 {
-    "name": "atomastic/view",
+    "name": "glowy/php",
     "description": "View Component provides basic methods for displaying PHP views.",
     "license": "MIT",
     "keywords": [
-        "View", "view", "php-view", "php", "atomastic"
+        "View", "view", "php-view", "php", "glowy"
     ],
     "support": {
-      "source": "https://github.com/atomastic/view",
-      "issues": "https://github.com/atomastic/view/issues"
+      "source": "https://github.com/glowyphp/view",
+      "issues": "https://github.com/glowyphp/view/issues"
     },
     "authors": [
         {
@@ -22,13 +22,13 @@
         "ext-mbstring": "*",
         "ext-spl": "*",
         "ext-fileinfo": "*",
-        "atomastic/macroable": "^2.0",
-        "atomastic/strings": "^3.0",
-        "atomastic/filesystem": "^2.1"
+        "glowy/macroable": "^3.1.0",
+        "glowy/strings": "^4.2.0",
+        "glowy/filesystem": "^3.0.0"
     },
     "autoload":{
         "psr-4": {
-            "Atomastic\\View\\": "src/"
+            "Glowy\\View\\": "src/"
         },
         "files": [
             "src/helpers.php"

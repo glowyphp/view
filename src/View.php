@@ -411,7 +411,9 @@ class View implements ArrayAccess
      */
     public function includeWhen(bool $condition, string $view, array $data = [], ?callable $callback = null): void
     {
-        $condition and $this->include($view, $data, $callback);
+        if ($condition) {
+            $this->include($view, $data, $callback);
+        }
     }
 
     /**
@@ -426,7 +428,9 @@ class View implements ArrayAccess
      */
     public function includeUnless(bool $condition, string $view, array $data = [], ?callable $callback = null): void
     {
-        ! $condition and $this->include($view, $data, $callback);
+        if (! $condition) {
+            $this->include($view, $data, $callback);
+        }
     }
 
     /**

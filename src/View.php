@@ -201,7 +201,9 @@ class View implements ArrayAccess
         // Is content empty
         if (empty($this->content)) {
             // Extract variables as references
-            extract(array_merge($this->data, self::$shared), EXTR_REFS);
+            $viewVars = array_merge($this->data, self::$shared);
+
+            extract($viewVars, EXTR_REFS);
 
             // Turn on output buffering
             ob_start();

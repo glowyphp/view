@@ -81,6 +81,13 @@ class View implements ArrayAccess
     protected static string $extension = 'php';
 
     /**
+     * Set section name.
+     *
+     * @var string Section name.
+     */
+    protected string $sectionName;
+
+    /**
      * Set section content mode:
      * rewrite, append, prepend
      *
@@ -491,7 +498,7 @@ class View implements ArrayAccess
      * Start a new section block.
      *
      * @param string $section The name of the section.
-     * @param string $mode    The mode of the section.
+     * @param int    $mode    The mode of the section.
      */
     public function section(string $section, int $mode = self::SECTION_MODE_REWRITE): void
     {

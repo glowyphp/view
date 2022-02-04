@@ -3,7 +3,7 @@
     "description": "View Component provides basic methods for displaying PHP views.",
     "license": "MIT",
     "keywords": [
-        "View", "view", "php-view", "php", "Glowy"
+      "view", "php-view", "php", "glowy"
     ],
     "support": {
       "source": "https://github.com/glowyphp/view",

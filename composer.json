@@ -1,5 +1,5 @@
 {
-    "name": "glowy/php",
+    "name": "glowy/view",
     "description": "View Component provides basic methods for displaying PHP views.",
     "license": "MIT",
     "keywords": [

@@ -18,7 +18,7 @@ composer require glowy/view
 ```
 
 ### Resources
-* [Documentation](https://digital.flextype.org/glowyphp/components/view)
+* [Documentation]()
 
 ### Tests
 

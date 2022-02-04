@@ -85,7 +85,7 @@ class View implements ArrayAccess
      *
      * @var string Section name.
      */
-    protected string $sectionName;
+    protected string|null $sectionName = null;
 
     /**
      * Set section content mode:
@@ -403,7 +403,7 @@ class View implements ArrayAccess
      * Include view and display based on a given condition.
      *
      * @param bool          $condition Condition to check.
-     * @param string        $name      View name.
+     * @param string        $view      View name.
      * @param array         $data      View data.
      * @param callable|null $callback  Callback function used to filter output.
      * 
@@ -418,7 +418,7 @@ class View implements ArrayAccess
      * Include view and display based on the negation of a given condition.
      *
      * @param bool          $condition Condition to check.
-     * @param string        $name      View name.
+     * @param string        $view      View name.
      * @param array         $data      View data.
      * @param callable|null $callback  Callback function used to filter output.
      * 

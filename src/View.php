@@ -83,9 +83,9 @@ class View implements ArrayAccess
     /**
      * Set section name.
      *
-     * @var string Section name.
+     * @var string|null Section name.
      */
-    protected string|null $sectionName = null;
+    protected ?string $sectionName = null;
 
     /**
      * Set section content mode:

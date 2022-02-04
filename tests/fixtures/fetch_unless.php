@@ -1,0 +1,1 @@
+<?= e($this->fetchUnless(false, 'foo')) ?>

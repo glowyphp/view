@@ -1,0 +1,1 @@
+<?php $this->includeUnless(false, 'foo') ?>

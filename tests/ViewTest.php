@@ -89,6 +89,20 @@ test('render', function (): void {
     $this->assertEquals('Foo', $view->render());
 });
 
+test('renderWhen', function (): void {
+    $view = view(__DIR__ . '/fixtures/foo');
+
+    $this->assertEquals('Foo', $view->renderWhen(true));
+    $this->assertEquals('', $view->renderWhen(false));
+});
+
+test('renderUnless', function (): void {
+    $view = view(__DIR__ . '/fixtures/foo');
+
+    $this->assertEquals('Foo', $view->renderUnless(false));
+    $this->assertEquals('', $view->renderUnless(true));
+});
+
 test('render with callback', function (): void {
     $view = view(__DIR__ . '/fixtures/foo');
 
@@ -162,8 +176,36 @@ test('fetch', function (): void {
     $view->display();
 });
 
-test('inlcude', function (): void {
+test('fetchWhen', function (): void {
+    $view = view('fetch_when');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
+test('fetchUnless', function (): void {
+    $view = view('fetch_unless');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
+test('include', function (): void {
     $view = view('include');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
+test('includeWhen', function (): void {
+    $view = view('include_when');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
+test('includeUnless', function (): void {
+    $view = view('include_unless');
 
     $this->expectOutputString("Foo");
     $view->display();

@@ -215,6 +215,34 @@ class View implements ArrayAccess
     }
 
     /**
+     * Render the view file and extracts the view variables before returning the generated output
+     * based on a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function renderWhen(bool $condition, ?callable $callback = null): string
+    {
+        return $condition ? $this->render($callback) : '';
+    }
+
+    /**
+     * Render the view file and extracts the view variables before returning the generated output
+     * based on the negation of a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function renderUnless(bool $condition, ?callable $callback = null): string
+    {
+        return ! $condition ? $this->render($callback) : '';
+    }
+
+    /**
      * Displays the rendered view.
      *
      * @param string $callback Callback function used to filter output.
@@ -313,6 +341,36 @@ class View implements ArrayAccess
     }
 
     /**
+     * Fetch view based on a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $name      View name.
+     * @param array  $data      View data.
+     * @param string $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function fetchWhen(bool $condition, string $view, array $data = [], ?callable $callback = null): string
+    {
+        return $condition ? $this->fetch($view, $data, $callback) : '';
+    }
+
+    /**
+     * Fetch view based on the negation of a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $name      View name.
+     * @param array  $data      View data.
+     * @param string $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function fetchUnless(bool $condition, string $view, array $data = [], ?callable $callback = null): string
+    {
+        return ! $condition ? $this->fetch($view, $data, $callback) : '';
+    }
+
+    /**
      * Include view and display.
      *
      * @param string $name     View name.
@@ -324,6 +382,36 @@ class View implements ArrayAccess
     public function include(string $view, array $data = [], ?callable $callback = null): void
     {
         view($view, $data)->display($callback);
+    }
+
+    /**
+     * Include view and display based on a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $name      View name.
+     * @param array  $data      View data.
+     * @param string $callback  Callback function used to filter output.
+     * 
+     * @return void Return void.
+     */
+    public function includeWhen(bool $condition, string $view, array $data = [], ?callable $callback = null): void
+    {
+        $condition and $this->include($view, $data, $callback);
+    }
+
+    /**
+     * Include view and display based on the negation of a given condition.
+     *
+     * @param bool   $condition Condition to check.
+     * @param string $name      View name.
+     * @param array  $data      View data.
+     * @param string $callback  Callback function used to filter output.
+     * 
+     * @return void Return void.
+     */
+    public function includeUnless(bool $condition, string $view, array $data = [], ?callable $callback = null): void
+    {
+        ! $condition and $this->include($view, $data, $callback);
     }
 
     /**

@@ -9,7 +9,7 @@ jobs:
     - name: PHPStan
       uses: docker://oskarstark/phpstan-ga
       with:
-        args: analyse src/ -l 3
+        args: analyse src/ -l 4
   tests:
     name: Unit Tests for PHP ${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
     runs-on: ${{ matrix.os }}

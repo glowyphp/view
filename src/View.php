@@ -337,8 +337,8 @@ class View implements ArrayAccess
     /**
      * Fetch view.
      *
-     * @param string      $view     View name.
-     * @param array       $data     View data.
+     * @param string        $view     View name.
+     * @param array         $data     View data.
      * @param callable|null $callback Callback function used to filter output.
      *
      * @return string View content.
@@ -352,7 +352,7 @@ class View implements ArrayAccess
      * Fetch view based on a given condition.
      *
      * @param bool          $condition Condition to check.
-     * @param string        $name      View name.
+     * @param string        $view      View name.
      * @param array         $data      View data.
      * @param callable|null $callback  Callback function used to filter output.
      *
@@ -367,7 +367,7 @@ class View implements ArrayAccess
      * Fetch view based on the negation of a given condition.
      *
      * @param bool          $condition Condition to check.
-     * @param string        $name      View name.
+     * @param string        $view      View name.
      * @param array         $data      View data.
      * @param callable|null $callback  Callback function used to filter output.
      *
@@ -381,7 +381,7 @@ class View implements ArrayAccess
     /**
      * Include view and display.
      *
-     * @param string        $name     View name.
+     * @param string        $view     View name.
      * @param array         $data     View data.
      * @param callable|null $callback Callback function used to filter output.
      * 
@@ -425,27 +425,27 @@ class View implements ArrayAccess
     /**
      * Extend parent view.
      *
-     * @param string $name View name to extend.
+     * @param string $view View name to extend.
      * @param array  $data View data.
      * 
      * @return void Return void.
      */
-    public function extends(string $name, array $data = []): void
+    public function extends(string $view, array $data = []): void
     {
-        $this->parentViewName = $name;
+        $this->parentViewName = $view;
         $this->parentViewData = $data;
     }
 
     /**
      * Determine if section exists.
      *
-     * @param string $name Section name.
+     * @param string $section Section name.
      *
      * @return bool Returns true or false section doesnt exists.
      */
-    public function hasSection(string $name): bool
+    public function hasSection(string $section): bool
     {
-        if (isset($this->sections[$name])) {
+        if (isset($this->sections[$section])) {
             return true;
         }
 
@@ -455,51 +455,51 @@ class View implements ArrayAccess
     /**
      * Get section.
      *
-     * @param string $name    Section name.
+     * @param string $section Section name.
      * @param mixed  $default Default data to display.
      */
-    public function getSection(string $name, $default = null)
+    public function getSection(string $section, $default = null)
     {
-        if (! isset($this->sections[$name])) {
+        if (! isset($this->sections[$section])) {
             return $default;
         }
 
-        return $this->sections[$name];
+        return $this->sections[$section];
     }
 
     /**
      * Start new prepend section.
      *
-     * @param string $name The name of the section.
+     * @param string $section The name of the section.
      */
-    public function prependSection(string $name): void
+    public function prependSection(string $section): void
     {
-        $this->section($name, self::SECTION_MODE_PREPEND);
+        $this->section($section, self::SECTION_MODE_PREPEND);
     }
 
     /**
      * Start new append section.
      *
-     * @param string $name The name of the section.
+     * @param string $section The name of the section.
      */
-    public function appendSection(string $name): void
+    public function appendSection(string $section): void
     {
-        $this->section($name, self::SECTION_MODE_APPEND);
+        $this->section($section, self::SECTION_MODE_APPEND);
     }
 
     /**
      * Start a new section block.
      *
-     * @param string $name The name of the section.
-     * @param string $mode The mode of the section.
+     * @param string $section The name of the section.
+     * @param string $mode    The mode of the section.
      */
-    public function section(string $name, int $mode = self::SECTION_MODE_REWRITE): void
+    public function section(string $section, int $mode = self::SECTION_MODE_REWRITE): void
     {
         if ($this->sectionName) {
             throw new ViewLogicException('You cannot nest sections within other sections.');
         }
 
-        $this->sectionName = $name;
+        $this->sectionName = $section;
         $this->sectionMode = $mode;
 
         ob_start();

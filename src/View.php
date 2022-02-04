@@ -103,6 +103,13 @@ class View implements ArrayAccess
     protected array $parentViewData;
 
     /**
+     * The sections.
+     *
+     * @var array Sections.
+     */
+    protected array $sections = [];
+
+    /**
      * Create a new view instance.
      *
      * @param string $view Name of the view file
@@ -330,7 +337,7 @@ class View implements ArrayAccess
     /**
      * Fetch view.
      *
-     * @param string      $name     View name.
+     * @param string      $view     View name.
      * @param array       $data     View data.
      * @param callable|null $callback Callback function used to filter output.
      *
@@ -344,10 +351,10 @@ class View implements ArrayAccess
     /**
      * Fetch view based on a given condition.
      *
-     * @param bool   $condition Condition to check.
-     * @param string $name      View name.
-     * @param array  $data      View data.
-     * @param string $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param string        $name      View name.
+     * @param array         $data      View data.
+     * @param callable|null $callback  Callback function used to filter output.
      *
      * @return string View content.
      */

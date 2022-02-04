@@ -1,6 +1,6 @@
 <h1 align="center">View</h1>
 <p align="center">
-View Component provides basic methods for creating extendable PHP Views.
+View Package provides basic methods for creating extendable PHP Views.
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@ composer require glowy/view
 ```
 
 ### Resources
-* [Documentation](https://digital.flextype.org/glowyphp/components/view)
+* [Documentation]()
 
 ### Tests
 

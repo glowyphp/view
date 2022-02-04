@@ -25,11 +25,11 @@ if (! function_exists('e')) {
      *
      * @param string $string Name of the view file
      * @param int    $flags  A bitmask of one or more of the following flags, which specify how to handle quotes, invalid code unit sequences and the used document type.
-     *                       The default is ENT_COMPAT | ENT_HTML401.
+     *                       The default is ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401.
      * 
      * @return string
      */
-    function e(string $string, int $flags = ENT_COMPAT | ENT_HTML401): string
+    function e(string $string, int $flags = ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401): string
     {
         return htmlspecialchars($string, $flags, 'UTF-8');
     }

@@ -178,7 +178,7 @@ class View implements ArrayAccess
     /**
      * Render the view file and extracts the view variables before returning the generated output.
      *
-     * @param string|null $callback Callback function used to filter output.
+     * @param callable|null $callback Callback function used to filter output.
      *
      * @return string View content.
      */
@@ -219,8 +219,8 @@ class View implements ArrayAccess
      * Render the view file and extracts the view variables before returning the generated output
      * based on a given condition.
      *
-     * @param bool        $condition Condition to check.
-     * @param string|null $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param callable|null $callback  Callback function used to filter output.
      *
      * @return string View content.
      */
@@ -233,8 +233,8 @@ class View implements ArrayAccess
      * Render the view file and extracts the view variables before returning the generated output
      * based on the negation of a given condition.
      *
-     * @param bool   $condition Condition to check.
-     * @param string|null $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param callable|null $callback  Callback function used to filter output.
      *
      * @return string View content.
      */
@@ -246,7 +246,7 @@ class View implements ArrayAccess
     /**
      * Displays the rendered view.
      *
-     * @param string|null $callback Callback function used to filter output.
+     * @param callable|null $callback Callback function used to filter output.
      */
     public function display(?callable $callback = null): void
     {
@@ -332,7 +332,7 @@ class View implements ArrayAccess
      *
      * @param string      $name     View name.
      * @param array       $data     View data.
-     * @param string|null $callback Callback function used to filter output.
+     * @param callable|null $callback Callback function used to filter output.
      *
      * @return string View content.
      */
@@ -359,10 +359,10 @@ class View implements ArrayAccess
     /**
      * Fetch view based on the negation of a given condition.
      *
-     * @param bool        $condition Condition to check.
-     * @param string      $name      View name.
-     * @param array       $data      View data.
-     * @param string|null $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param string        $name      View name.
+     * @param array         $data      View data.
+     * @param callable|null $callback  Callback function used to filter output.
      *
      * @return string View content.
      */
@@ -374,9 +374,9 @@ class View implements ArrayAccess
     /**
      * Include view and display.
      *
-     * @param string      $name     View name.
-     * @param array       $data     View data.
-     * @param string|null $callback Callback function used to filter output.
+     * @param string        $name     View name.
+     * @param array         $data     View data.
+     * @param callable|null $callback Callback function used to filter output.
      * 
      * @return void Return void.
      */
@@ -388,10 +388,10 @@ class View implements ArrayAccess
     /**
      * Include view and display based on a given condition.
      *
-     * @param bool        $condition Condition to check.
-     * @param string      $name      View name.
-     * @param array       $data      View data.
-     * @param string|null $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param string        $name      View name.
+     * @param array         $data      View data.
+     * @param callable|null $callback  Callback function used to filter output.
      * 
      * @return void Return void.
      */
@@ -403,10 +403,10 @@ class View implements ArrayAccess
     /**
      * Include view and display based on the negation of a given condition.
      *
-     * @param bool        $condition Condition to check.
-     * @param string      $name      View name.
-     * @param array       $data      View data.
-     * @param string|null $callback  Callback function used to filter output.
+     * @param bool          $condition Condition to check.
+     * @param string        $name      View name.
+     * @param array         $data      View data.
+     * @param callable|null $callback  Callback function used to filter output.
      * 
      * @return void Return void.
      */

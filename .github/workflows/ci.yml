@@ -2,11 +2,11 @@ name: CI
 on: ['push', 'pull_request']
 jobs:
   phpstan:
-    name: PHPStan
+    name: PHP Static Analysis
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: PHP Static Analysis
+    - name: PHPStan
       uses: docker://oskarstark/phpstan-ga
       with:
         args: analyse src/ -l 3

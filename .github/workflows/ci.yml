@@ -6,12 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: PHPStan
+    - name: PHP Static Analysis
       uses: docker://oskarstark/phpstan-ga
       with:
         args: analyse src/ -l 3
   tests:
-    name: PHP ${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
+    name: Unit Tests for PHP ${{ matrix.php }} - ${{ matrix.os }} - ${{ matrix.dependency-version }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

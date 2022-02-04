@@ -175,7 +175,7 @@ class View implements ArrayAccess
     }
 
     /**
-     * Include the view file and extracts the view variables before returning the generated output.
+     * Render the view file and extracts the view variables before returning the generated output.
      *
      * @param string $callback Callback function used to filter output.
      *

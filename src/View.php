@@ -374,7 +374,7 @@ class View implements \ArrayAccess
      *
      * @throws ViewInvalidArgumentException
      * 
-     * @return self
+     * @return string
      */
     public function fetchFirst(array $views, array $data = [], ?callable $callback = null): string
     {
@@ -446,8 +446,6 @@ class View implements \ArrayAccess
      * @param callable|null $callback Callback function used to filter output.
      *
      * @throws ViewInvalidArgumentException
-     * 
-     * @return self
      */
     public function includeFirst(array $views, array $data = [], ?callable $callback = null): void
     {

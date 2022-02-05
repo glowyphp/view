@@ -1,3 +1,3 @@
 <a name="1.0.0"></a>
-# [1.0.0](https://github.com/glowyphp/view) (2022-02-xx)
+# [1.0.0](https://github.com/glowyphp/view) (2022-02-05)
 * Initial release

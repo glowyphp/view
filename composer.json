@@ -1,6 +1,6 @@
 {
     "name": "glowy/view",
-    "description": "View Component provides basic methods for displaying PHP views.",
+    "description": "View Package provides basic methods for creating extendable PHP Views.",
     "license": "MIT",
     "keywords": [
       "view", "php-view", "php", "glowy"

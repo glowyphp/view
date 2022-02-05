@@ -60,8 +60,10 @@ class View implements \ArrayAccess
 
     /**
      * The array of view data.
-     *
-     * @var array View data.
+     * 
+     * @template TKey
+     * @template TValue
+     * @var array<TKey, TValue> View data.
      */
     protected array $data;
 

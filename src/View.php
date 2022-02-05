@@ -27,7 +27,11 @@ use function vsprintf;
 
 use const EXTR_REFS;
 
-class View implements ArrayAccess
+/**
+ * @template TValue
+ * @implements \ArrayAccess<int, TValue>
+ */
+class View implements \ArrayAccess
 {
     use Macroable {
         __call as macroCall;

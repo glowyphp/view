@@ -28,8 +28,9 @@ use function vsprintf;
 use const EXTR_REFS;
 
 /**
- * @template TValue
- * @implements \ArrayAccess<int, TValue>
+ * View.
+ *
+ * @template TKey of array-key
  */
 class View implements \ArrayAccess
 {
@@ -61,9 +62,7 @@ class View implements \ArrayAccess
     /**
      * The array of view data.
      * 
-     * @template TKey
-     * @template TValue
-     * @var array<TKey, TValue> View data.
+     * @var array View data.
      */
     protected array $data;
 
@@ -76,7 +75,7 @@ class View implements \ArrayAccess
 
     /**
      * Data that should be available to all views.
-     *
+     * 
      * @var array Shared data with all views.
      */
     protected static array $shared = [];
@@ -218,7 +217,7 @@ class View implements \ArrayAccess
             include $this->view;
 
             // Write content.
-            $this->content = ob_get_clean();
+            $this->content = ob_get_clean() ?: '';
 
             // Extend parent view
             if (isset($this->parentViewName)) {
@@ -476,6 +475,8 @@ class View implements \ArrayAccess
      *
      * @param string $section Section name.
      * @param mixed  $default Default data to display.
+     * 
+     * @return mixed
      */
     public function getSection(string $section, $default = null)
     {
@@ -563,6 +564,8 @@ class View implements \ArrayAccess
      *
      * @param string $method     Method.
      * @param array  $parameters Parameters.
+     * 
+     * @return self
      */
     public function __call(string $method, array $parameters)
     {
@@ -596,6 +599,9 @@ class View implements \ArrayAccess
     /**
      * Get a piece of bound data to the view.
      *
+     * @phpstan-param TKey $offset
+     * @param mixed $offset The offset to get.
+     * 
      * @return mixed
      */
     #[\ReturnTypeWillChange]

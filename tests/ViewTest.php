@@ -175,6 +175,13 @@ test('fetch', function (): void {
     $view->display();
 });
 
+test('fetchFirst', function (): void {
+    $view = view('fetch_first');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
 test('fetchWhen', function (): void {
     $view = view('fetch_when');
 
@@ -195,6 +202,14 @@ test('include', function (): void {
     $this->expectOutputString("Foo");
     $view->display();
 });
+
+test('includeFirst', function (): void {
+    $view = view('include_first');
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
 
 test('includeWhen', function (): void {
     $view = view('include_when');

@@ -9,6 +9,7 @@ use Glowy\Macroable\Macroable;
 use BadMethodCallException;
 use RuntimeException as ViewException;
 use LogicException as ViewLogicException;
+use InvalidArgumentException as ViewInvalidArgumentException;
 
 use function array_key_exists;
 use function array_merge;
@@ -126,6 +127,8 @@ class View implements \ArrayAccess
      *
      * @param string $view Name of the view file
      * @param array  $data Array of view variables
+     * 
+     * @throws ViewException
      */
     public function __construct(string $view, array $data = [])
     {
@@ -195,86 +198,6 @@ class View implements \ArrayAccess
     }
 
     /**
-     * Render the view file and extracts the view variables before returning the generated output.
-     *
-     * @param callable|null $callback Callback function used to filter output.
-     *
-     * @return string View content.
-     */
-    public function render(?callable $callback = null): string
-    {
-        // Is content empty
-        if (empty($this->content)) {
-            // Extract variables as references
-            $viewVars = array_merge($this->data, self::$shared);
-
-            extract($viewVars, EXTR_REFS);
-
-            // Turn on output buffering
-            ob_start();
-
-            // Include view file
-            include $this->view;
-
-            // Write content.
-            $this->content = ob_get_clean() ?: '';
-
-            // Extend parent view
-            if (isset($this->parentViewName)) {
-                $parent           = view($this->parentViewName, $this->parentViewData);
-                $parent->sections = $this->sections;
-                $this->content    = $parent->render();
-            }
-        }
-
-        // Filter content
-        if ($callback !== null) {
-            $this->content = call_user_func($callback, $this->content);
-        }
-
-        // Return content
-        return $this->content;
-    }
-
-    /**
-     * Render the view file and extracts the view variables before returning the generated output
-     * based on a given condition.
-     *
-     * @param bool          $condition Condition to check.
-     * @param callable|null $callback  Callback function used to filter output.
-     *
-     * @return string View content.
-     */
-    public function renderWhen(bool $condition, ?callable $callback = null): string
-    {
-        return $condition ? $this->render($callback) : '';
-    }
-
-    /**
-     * Render the view file and extracts the view variables before returning the generated output
-     * based on the negation of a given condition.
-     *
-     * @param bool          $condition Condition to check.
-     * @param callable|null $callback  Callback function used to filter output.
-     *
-     * @return string View content.
-     */
-    public function renderUnless(bool $condition, ?callable $callback = null): string
-    {
-        return ! $condition ? $this->render($callback) : '';
-    }
-
-    /**
-     * Displays the rendered view.
-     *
-     * @param callable|null $callback Callback function used to filter output.
-     */
-    public function display(?callable $callback = null): void
-    {
-        echo $this->render($callback);
-    }
-
-    /**
      * Get the array of view data.
      *
      * @return array View data.
@@ -325,7 +248,7 @@ class View implements \ArrayAccess
      */
     public static function getFilePath(string $view): string
     {
-        return self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension;
+        return strings(self::$directory . '/' . self::denormalizeName(self::normalizeName($view)) . '.' . self::$extension)->replace('//', '/')->toString();
     }
 
     /**
@@ -349,6 +272,86 @@ class View implements \ArrayAccess
     }
 
     /**
+     * Render the view file and extracts the view variables before returning the generated output.
+     *
+     * @param callable|null $callback Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function render(?callable $callback = null): string
+    {
+        // Is content empty
+        if (empty($this->content)) {
+            // Extract variables as references
+            $viewVars = array_merge($this->data, self::$shared);
+
+            extract($viewVars, EXTR_REFS);
+
+            // Turn on output buffering
+            ob_start();
+
+            // Include view file
+            include $this->view;
+
+            // Write content.
+            $this->content = ob_get_clean() ?: '';
+
+            // Extend parent view
+            if (isset($this->parentViewName)) {
+                $parent           = view($this->parentViewName, $this->parentViewData);
+                $parent->sections = $this->sections;
+                $this->content    = $parent->render();
+            }
+        }
+
+        // Filter content
+        if ($callback !== null) {
+            $this->content = call_user_func($callback, $this->content);
+        }
+
+        // Return rendered content
+        return $this->content;
+    }
+
+    /**
+     * Render the view file and extracts the view variables before returning the generated output
+     * based on a given condition.
+     *
+     * @param bool          $condition Condition to check.
+     * @param callable|null $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function renderWhen(bool $condition, ?callable $callback = null): string
+    {
+        return $condition ? $this->render($callback) : '';
+    }
+
+    /**
+     * Render the view file and extracts the view variables before returning the generated output
+     * based on the negation of a given condition.
+     *
+     * @param bool          $condition Condition to check.
+     * @param callable|null $callback  Callback function used to filter output.
+     *
+     * @return string View content.
+     */
+    public function renderUnless(bool $condition, ?callable $callback = null): string
+    {
+        return ! $condition ? $this->render($callback) : '';
+    }
+
+    /**
+     * Displays the rendered view.
+     *
+     * @param callable|null $callback Callback function used to filter output.
+     */
+    public function display(?callable $callback = null): void
+    {
+        echo $this->render($callback);
+    }
+
+    /**
      * Fetch view.
      *
      * @param string        $view     View name.
@@ -359,6 +362,35 @@ class View implements \ArrayAccess
      */
     public function fetch(string $view, array $data = [], ?callable $callback = null): string
     {
+        return view($view, $data)->render($callback);
+    }
+
+    /**
+     * Fetch first view that exists in a given array of views.
+     *
+     * @param array         $views    Views array.
+     * @param array         $data     View data.
+     * @param callable|null $callback Callback function used to filter output.
+     *
+     * @throws ViewInvalidArgumentException
+     * 
+     * @return self
+     */
+    public function fetchFirst(array $views, array $data = [], ?callable $callback = null): string
+    {
+        $view = '';
+
+        foreach ($views as $v) {
+            if (filesystem()->file(self::getFilePath($v))->exists()) {
+                $view = $v;
+                break;
+            }
+        }
+
+        if ($view === '') {
+            throw new ViewInvalidArgumentException('None of the views in the given array exist.');
+        }
+
         return view($view, $data)->render($callback);
     }
 
@@ -404,6 +436,35 @@ class View implements \ArrayAccess
     public function include(string $view, array $data = [], ?callable $callback = null): void
     {
         view($view, $data)->display($callback);
+    }
+
+    /**
+     * Include first view that exists in a given array of views.
+     *
+     * @param array         $views    Views array.
+     * @param array         $data     View data.
+     * @param callable|null $callback Callback function used to filter output.
+     *
+     * @throws ViewInvalidArgumentException
+     * 
+     * @return self
+     */
+    public function includeFirst(array $views, array $data = [], ?callable $callback = null): void
+    {
+        $view = '';
+
+        foreach ($views as $v) {
+            if (filesystem()->file(self::getFilePath($v))->exists()) {
+                $view = $v;
+                break;
+            }
+        }
+
+        if ($view === '') {
+            throw new ViewInvalidArgumentException('None of the views in the given array exist.');
+        }
+
+        $this->include($view, $data, $callback);
     }
 
     /**
@@ -512,6 +573,8 @@ class View implements \ArrayAccess
      *
      * @param string $section The name of the section.
      * @param int    $mode    The mode of the section.
+     * 
+     * @throws ViewLogicException
      */
     public function section(string $section, int $mode = self::SECTION_MODE_REWRITE): void
     {
@@ -527,6 +590,8 @@ class View implements \ArrayAccess
 
     /**
      * Stop the current section block.
+     * 
+     * @throws ViewLogicException
      */
     public function endSection(): void
     {
@@ -564,6 +629,8 @@ class View implements \ArrayAccess
      *
      * @param string $method     Method.
      * @param array  $parameters Parameters.
+     * 
+     * @throws BadMethodCallException
      * 
      * @return self
      */

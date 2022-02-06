@@ -4,7 +4,10 @@ View Package provides basic methods for creating extendable PHP Views.
 </p>
 
 <p align="center">
-<a href="https://github.com/glowyphp/view/releases"><img alt="Version" src="https://img.shields.io/github/release/glowyphp/view.svg?label=version&color=green"></a> <a href="https://github.com/glowyphp/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=green" alt="License"></a> <a href="https://packagist.org/packages/glowy/view"><img src="https://poser.pugx.org/glowy/view/downloads" alt="Total downloads"></a> <img src="https://github.com/glowyphp/view/actions/workflows/ci.yml/badge.svg"> <img src="https://api.codeclimate.com/v1/badges/a4c673a4640a3863a9a4/maintainability" /></a> <img src="http://poser.pugx.org/glowy/strings/require/php">
+<a href="https://github.com/glowyphp/view/releases"><img alt="Version" src="https://img.shields.io/github/release/glowyphp/view.svg?label=version&color=green"></a>
+<a href="https://github.com/glowyphp/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=green" alt="License"></a>
+<a href="https://packagist.org/packages/glowy/view"><img src="https://poser.pugx.org/glowy/view/downloads" alt="Total downloads"></a>
+<img src="https://github.com/glowyphp/view/actions/workflows/ci.yml/badge.svg"></a> <img src="http://poser.pugx.org/glowy/strings/require/php">
 </p>
 
 <br>

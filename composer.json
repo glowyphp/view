@@ -36,9 +36,9 @@
     },
     "require-dev": {
         "doctrine/coding-standard": "9.0.0",
-        "pestphp/pest": "^1.12.0",
-        "phpstan/phpstan": "^0.12.94",
-        "symfony/var-dumper": "^5.3.6"
+        "pestphp/pest": "^1.21.1",
+        "phpstan/phpstan": "^1.4.5",
+        "symfony/var-dumper": "^5.4.3"
     },
     "config": {
         "allow-plugins": {

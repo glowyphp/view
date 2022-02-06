@@ -29,7 +29,9 @@ use function vsprintf;
 use const EXTR_REFS;
 
 /**
- * View.
+ * View Class.
+ * 
+ * Provides basic methods for creating extendable PHP Views.
  *
  * @template TKey of array-key
  */

@@ -21,7 +21,7 @@ composer require glowy/view
 ```
 
 ### Resources
-* [Documentation](https://awilum.github.io/glowyphp/view/)
+* [Documentation](https://awilum.github.io/glowyphp/view)
 
 ### Tests
 

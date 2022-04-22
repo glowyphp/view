@@ -230,6 +230,26 @@ class View implements \ArrayAccess
     }
 
     /**
+     * Get views directory.
+     *
+     * @return string Views directory.
+     */
+    public static function getDirectory(): string
+    {
+        return self::$directory;
+    }
+
+    /**
+     * Get views extension.
+     *
+     * @return string Views extension.
+     */
+    public static function getExtension(): string
+    {
+        return self::$extension;
+    }
+
+    /**
      * Determining If A View Exists
      *
      * @param string $view View name.

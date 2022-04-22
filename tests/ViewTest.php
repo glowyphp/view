@@ -127,16 +127,18 @@ test('macro', function (): void {
     $this->assertEquals('Foo Bar', (string) $view->withFoo('Foo')->withBar('Bar'));
 });
 
-test('set directory', function (): void {
+test('set and get directory', function (): void {
     View::setDirectory(__DIR__ . '/fixtures/');
 
     $this->assertEquals('Foo', view('foo')->render());
+    $this->assertEquals(__DIR__ . '/fixtures/', View::getDirectory());
 });
 
-test('set extension', function (): void {
+test('set and get extension', function (): void {
     View::setExtension('php');
 
     $this->assertEquals('Foo', view('foo')->render());
+    $this->assertEquals('php', View::getExtension());
 });
 
 test('normalize view name', function (): void {

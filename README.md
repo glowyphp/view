@@ -4,11 +4,11 @@ View Package provides basic methods for creating extendable PHP Views.
 </p>
 
 <p align="center">
-<a href="https://github.com/glowyphp/view/releases"><img alt="Version" src="https://img.shields.io/github/release/glowyphp/view.svg?label=version&color=green"></a>
-<a href="https://github.com/glowyphp/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=green" alt="License"></a>
-<a href="https://packagist.org/packages/glowy/view"><img src="https://poser.pugx.org/glowy/view/downloads" alt="Total downloads"></a>
-<img src="https://github.com/glowyphp/view/actions/workflows/ci.yml/badge.svg"></a> <img src="http://poser.pugx.org/glowy/view/require/php">
+<a href="https://github.com/glowyphp/view/releases"><img alt="Version" src="https://img.shields.io/github/release/glowyphp/view.svg?label=version&style=for-the-badge"></a>
+<a href="https://github.com/glowyphp/view"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="License"></a>
+<a href="https://packagist.org/packages/glowy/view"><img src="https://poser.pugx.org/glowy/view/downloads?style=for-the-badge" alt="Total downloads"></a><img src="http://poser.pugx.org/glowy/view/require/php?style=for-the-badge">
 </p>
+
 
 <br>
 

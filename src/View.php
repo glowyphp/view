@@ -149,11 +149,11 @@ class View implements ArrayAccess, Stringable
     /**
      * Set view file path.
      *
-     * @param string|null $view Name of the view file.
+     * @param string $view Name of the view file.
      * 
      * @return $this
      */
-    public function file(string|null $view = null): self
+    public function file(string $view): self
     {
         $viewFilePath = self::getFilePath($view);
 

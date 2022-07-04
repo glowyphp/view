@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use function Glowy\View\view;
+use function Glowy\View\e;
 use Glowy\View\View;
 use RuntimeException as ViewException;
 use LogicException as ViewLogicException;
@@ -167,6 +169,20 @@ test('sections has', function (): void {
     $view = view('sections/section-has');
 
     $this->expectOutputString("");
+    $view->display();
+});
+
+test('data', function (): void {
+    $view = view()->file('fetch')->data(['foo' => 'Foo']);
+
+    $this->expectOutputString("Foo");
+    $view->display();
+});
+
+test('fetch view file with data', function (): void {
+    $view = view()->file('fetch_with_data')->with(['foo' => 'Foo']);
+
+    $this->expectOutputString("FooFoo");
     $view->display();
 });
 

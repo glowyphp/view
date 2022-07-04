@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
+namespace Glowy\View;
+
 use Glowy\View\View;
 
 if (! function_exists('view')) {
     /**
      * Create a new view instance.
      *
-     * @param string $view Name of the view file.
+     * @param string|null $view Name of the view file.
      * @param array  $data Array of view variables.
      * 
-     * @return View
+     * @return \Glowy\View\View
      */
-    function view(string $view, array $data = []): View
+    function view(string|null $view = null, array $data = []): \Glowy\View\View
     {
         return new View($view, $data);
     }

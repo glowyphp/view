@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Glowy\View;
 
+use Stringable;
 use ArrayAccess;
 use Glowy\Macroable\Macroable;
 use BadMethodCallException;
@@ -11,19 +12,19 @@ use RuntimeException as ViewException;
 use LogicException as ViewLogicException;
 use InvalidArgumentException as ViewInvalidArgumentException;
 
+use function Glowy\Filesystem\filesystem;
+use function Glowy\Strings\strings;
+use function Glowy\View\view;
 use function array_key_exists;
 use function array_merge;
 use function call_user_func;
 use function extract;
-use function filesystem;
 use function is_array;
 use function is_null;
 use function ob_get_clean;
 use function ob_start;
 use function sprintf;
-use function strings;
 use function substr;
-use function view;
 use function vsprintf;
 
 use const EXTR_REFS;
@@ -35,7 +36,7 @@ use const EXTR_REFS;
  *
  * @template TKey of array-key
  */
-class View implements \ArrayAccess
+class View implements ArrayAccess, Stringable
 {
     use Macroable {
         __call as macroCall;
@@ -56,11 +57,11 @@ class View implements \ArrayAccess
     protected static string $directory = '';
 
     /**
-     * The name of the view.
+     * The view file path.
      *
-     * @var string View name.
+     * @var string View file path.
      */
-    protected string $view;
+    protected string $viewFilePath;
 
     /**
      * The array of view data.
@@ -93,7 +94,7 @@ class View implements \ArrayAccess
      *
      * @var string|null Section name.
      */
-    protected ?string $sectionName = null;
+    protected string|null $sectionName = null;
 
     /**
      * Set section content mode:
@@ -127,12 +128,32 @@ class View implements \ArrayAccess
     /**
      * Create a new view instance.
      *
-     * @param string $view Name of the view file
-     * @param array  $data Array of view variables
+     * @param string|null $view Name of the view file.
+     * @param array  $data Array of view variables.
      * 
      * @throws ViewException
      */
-    public function __construct(string $view, array $data = [])
+    public function __construct(string|null $view = null, array $data = [])
+    {
+        if ($view !== null) {
+            $this->file($view);
+        }
+
+        // Set view data
+        $this->data($data);
+
+        // Set view content
+        $this->content = '';
+    }
+
+    /**
+     * Set view file path.
+     *
+     * @param string|null $view Name of the view file.
+     * 
+     * @return $this
+     */
+    public function file(string|null $view = null): self
     {
         $viewFilePath = self::getFilePath($view);
 
@@ -141,14 +162,10 @@ class View implements \ArrayAccess
             throw new ViewException(vsprintf("%s(): The '%s' view does not exist.", [__METHOD__, $view]));
         }
 
-        // Set view file
-        $this->view = $viewFilePath;
+        // Set view file path
+        $this->viewFilePath = $viewFilePath;
 
-        // Set view data
-        $this->data = $data;
-
-        // Set view content
-        $this->content = '';
+        return $this;
     }
 
     /**
@@ -195,6 +212,20 @@ class View implements \ArrayAccess
         } else {
             $this->data[$key] = $value;
         }
+
+        return $this;
+    }
+
+    /**
+     * Set the array of view data.
+     *
+     * @param array $data The array of view data.
+     * 
+     * @return $this
+     */
+    public function data(array $data): self
+    {
+        $this->data = $data;
 
         return $this;
     }
@@ -313,7 +344,7 @@ class View implements \ArrayAccess
             ob_start();
 
             // Include view file
-            include $this->view;
+            include $this->viewFilePath;
 
             // Write content.
             $this->content = ob_get_clean() ?: '';
